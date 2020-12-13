@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\RTSTest.dir/objects.a
+C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\ar.exe cr CMakeFiles\RTSTest.dir/objects.a @CMakeFiles\RTSTest.dir\objects1.rsp
+C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\RTSTest.dir/objects.a -Wl,--no-whole-archive  -o RTSTest.exe -Wl,--out-implib,libRTSTest.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\RTSTest.dir\linklibs.rsp

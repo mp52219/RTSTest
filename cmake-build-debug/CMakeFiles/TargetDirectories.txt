@@ -1,0 +1,3 @@
+C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/RTSTest.dir
+C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/rebuild_cache.dir

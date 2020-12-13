@@ -1,0 +1,4 @@
+ToolSet: w64 6.0 (local)@C:\Users\Marin\Downloads\mingw7-3\mingw64
+Options: 
+
+Options:
