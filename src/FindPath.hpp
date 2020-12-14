@@ -12,10 +12,12 @@ class FindPath {
 public:
     int src;
     int dst;
+    void setSrc(int src);
     std::list<int> retList;
     int d(int src, int dst);
     FindPath(int srcO,int dstO);
-    void findPath();
+
+    virtual void findPath();
 };
 
 

@@ -5,6 +5,8 @@
 #ifndef RTSTEST_GLOBALGAMEVARIABLES_HPP
 #define RTSTEST_GLOBALGAMEVARIABLES_HPP
 #include <SFML/Graphics.hpp>
+#include <list>
+
 extern const int gameSize;
 extern const int tileSize;
 extern sf::RenderWindow screen;
@@ -18,4 +20,5 @@ extern const int EFS;
 extern const int EFS2;
 extern char map[];
 extern char map2[];
+extern int slow;
 #endif //RTSTEST_GLOBALGAMEVARIABLES_HPP

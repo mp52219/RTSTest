@@ -2,9 +2,12 @@
 // Created by Marin on 13.12.2020..
 //
 
+#include <iostream>
 #include "GlobalGameVariables.hpp"
 #include "FindPath.hpp"
-
+void FindPath::setSrc(int src){
+    this->src = src;
+};
 int FindPath::d(int src, int dst) {
     int dx = abs(src / EFS - dst / EFS);
     int dy = abs(src % EFS - dst % EFS);
@@ -18,11 +21,15 @@ FindPath::FindPath(int srcO, int dstO) {
 }
 
 void FindPath::findPath() {
+    int prevDest = retList.back();
+    if(dst == prevDest) {
+        return;
+    }
     retList.clear();
     for (int i = 0; i < EFS2; i++) {
         map2[i] = '-';
     }
-    int slow = 0;
+    int slowM = 0;
     int nvs[EFS2];
     int vs[EFS2];
     int chg[EFS2];
@@ -32,66 +39,63 @@ void FindPath::findPath() {
         nvs[i] = MAX * MAX * MAX;
         chg[i] = -1;
     }
-    if (src == dst) {
-        retList.push_back(src);
-        return;
-    }
     nvs[src] = 0;
     vs[src] = src;
     int j;
+
     for (j = 0; j < EFS2; j++) {
         for (int i = 0; i < EFS2; i++) {
             if (vs[i] != -1 && map[i] != '*') {
                 if (map[i] == '+')
-                    slow = 20;
+                    slowM = slow;
                 else
-                    slow = 0;
+                    slowM = 0;
                 if (i % EFS != 0 && vs[i - 1] == -1) {
-                    if (nvs[i - 1] > nvs[i] + 10 + slow + d(i - 1, dst)) {
-                        nvs[i - 1] = nvs[i] + 10 + slow + d(i - 1, dst);
+                    if (nvs[i - 1] > nvs[i] + 10 + slowM + d(i - 1, dst)) {
+                        nvs[i - 1] = nvs[i] + 10 + slowM + d(i - 1, dst);
                         chg[i - 1] = i;
                     }
                 }
 
                 if (i % EFS != EFS - 1 && vs[i + 1] == -1) {
-                    if (nvs[i + 1] > nvs[i] + 10 + slow + d(i + 1, dst)) {
-                        nvs[i + 1] = nvs[i] + 10 + slow + d(i + 1, dst);
+                    if (nvs[i + 1] > nvs[i] + 10 + slowM + d(i + 1, dst)) {
+                        nvs[i + 1] = nvs[i] + 10 + slowM + d(i + 1, dst);
                         chg[i + 1] = i;
                     }
                 }
                 if (i % EFS != 0 && i >= EFS && vs[i - (EFS + 1)] == -1) {
-                    if (nvs[i - (EFS + 1)] > nvs[i] + 14 + slow + d(i - (EFS + 1), dst)) {
-                        nvs[i - (EFS + 1)] = nvs[i] + 14 + slow + d(i - (EFS + 1), dst);
+                    if (nvs[i - (EFS + 1)] > nvs[i] + 14 + slowM + d(i - (EFS + 1), dst)) {
+                        nvs[i - (EFS + 1)] = nvs[i] + 14 + slowM + d(i - (EFS + 1), dst);
                         chg[i - (EFS + 1)] = i;
                     }
                 }
                 if (i > EFS - 1 && i % EFS != EFS - 1 && vs[i - (EFS - 1)] == -1) {
-                    if (nvs[i - (EFS - 1)] > nvs[i] + 14 + slow + d(i - (EFS - 1), dst)) {
-                        nvs[i - (EFS - 1)] = nvs[i] + 14 + slow + d(i - (EFS - 1), dst);
+                    if (nvs[i - (EFS - 1)] > nvs[i] + 14 + slowM + d(i - (EFS - 1), dst)) {
+                        nvs[i - (EFS - 1)] = nvs[i] + 14 + slowM + d(i - (EFS - 1), dst);
                         chg[i - (EFS - 1)] = i;
                     }
                 }
                 if (i > EFS - 1 && vs[i - EFS] == -1) {
-                    if (nvs[i - EFS] > nvs[i] + 10 + slow + d(i - EFS, dst)) {
-                        nvs[i - EFS] = nvs[i] + 10 + slow + d(i - EFS, dst);
+                    if (nvs[i - EFS] > nvs[i] + 10 + slowM + d(i - EFS, dst)) {
+                        nvs[i - EFS] = nvs[i] + 10 + slowM + d(i - EFS, dst);
                         chg[i - EFS] = i;
                     }
                 }
                 if (i < EFS2 - EFS && vs[i + EFS] == -1) {
-                    if (nvs[i + EFS] > nvs[i] + 10 + slow + d(i + EFS, dst)) {
-                        nvs[i + EFS] = nvs[i] + 10 + slow + d(i + EFS, dst);
+                    if (nvs[i + EFS] > nvs[i] + 10 + slowM + d(i + EFS, dst)) {
+                        nvs[i + EFS] = nvs[i] + 10 + slowM + d(i + EFS, dst);
                         chg[i + EFS] = i;
                     }
                 }
                 if (i % EFS != 0 && i < EFS2 - EFS && vs[i + (EFS - 1)] == -1) {
-                    if (nvs[i + (EFS - 1)] > nvs[i] + 14 + slow + d(i + (EFS - 1), dst)) {
-                        nvs[i + (EFS - 1)] = nvs[i] + 14 + slow + d(i + (EFS - 1), dst);
+                    if (nvs[i + (EFS - 1)] > nvs[i] + 14 + slowM + d(i + (EFS - 1), dst)) {
+                        nvs[i + (EFS - 1)] = nvs[i] + 14 + slowM + d(i + (EFS - 1), dst);
                         chg[i + (EFS - 1)] = i;
                     }
                 }
                 if (i % EFS != EFS - 1 && i < EFS2 - (EFS + 1) && vs[i + (EFS + 1)] == -1) {
-                    if (nvs[i + (EFS + 1)] > nvs[i] + 14 + slow + d(i + (EFS + 1), dst)) {
-                        nvs[i + (EFS + 1)] = nvs[i] + 14 + slow + d(i + (EFS + 1), dst);
+                    if (nvs[i + (EFS + 1)] > nvs[i] + 14 + slowM + d(i + (EFS + 1), dst)) {
+                        nvs[i + (EFS + 1)] = nvs[i] + 14 + slowM + d(i + (EFS + 1), dst);
                         chg[i + (EFS + 1)] = i;
                     }
                 }
