@@ -1,26 +1,36 @@
 #include <iostream>
 #include <list>
+#include <unordered_set>
 #include "FindPath.hpp"
 #include "GlobalGameVariables.hpp"
-#include "Player.hpp"
+#include "Unit.hpp"
 
 int main() {
     for (int i = 0; i < EFS2; i++) {
         map[i] = '-';
     }
-    int src = 0;
-    int dst = 0;
-
     sf::RectangleShape rec;
+    sf::RectangleShape selectionBox;
+    selectionBox.setFillColor(sf::Color(144,238,144,80));
+    selectionBox.setOutlineColor(sf::Color(144,238,144,180));
+    selectionBox.setOutlineThickness(1);
     sf::Vector2i mapPosition;
     sf::Vector2f position;
     sf::Clock clock;
     sf::Texture texture;
-    std::list<int> path;
+    std::unordered_set<Unit *> units;
     int scrollSpeed = 300;
-    texture.loadFromFile(R"(C:\Users\Marin\CLionProjects\RTSTest\src\assets\redCircle.png)");
+    bool isPressed = false;
+    sf::Vector2f rectStart;
+    texture.loadFromFile(R"(C:\Users\Marin\CLionProjects\RTSTest\src\assets\ambulance.png)");
     float dt;
-    Player player(0, 0, texture);
+    Unit player(80, 80, texture);
+    Unit player2(112, 112, texture);
+    units.insert(&player);
+    units.insert(&player2);
+    for(Unit* unit : units){
+        unit->setOrigin(16, 16);
+    }
     while (screen.isOpen()) {
         mapPosition = sf::Mouse::getPosition(screen);
         position = screen.mapPixelToCoords(mapPosition);
@@ -33,25 +43,23 @@ int main() {
         if (mapPosition.y > 790)
             view1.move(0, 1 * dt * scrollSpeed);
         dt = clock.restart().asSeconds();
-        path = player.retList;
         while (screen.pollEvent(event)) {
             if (event.type == sf::Event::EventType::Closed) {
                 screen.close();
             }
-            //std::cout << dt << std::endl;
-
             if (event.type == sf::Event::EventType::MouseButtonPressed) {
 
                 if (event.mouseButton.button == sf::Mouse::Left) {
-                    for(int p : path){
-                        std::cout<<p<<  " ";
-                    }
-                    //player.src = ((int) position.y / tileSize) * EFS + ((int) position.x / tileSize);
+                    rectStart = position;
+                    isPressed = true;
                 } else if (event.mouseButton.button == sf::Mouse::Right) {
-                    player.dst = ((int) position.y / tileSize) * EFS + ((int) position.x / tileSize);
-                    sf::Thread thread(&Player::findPath, &player);
-                    thread.launch();
-                    path = player.retList;
+                    for (Unit *unit : units) {
+                        if (unit->isSelected) {
+                            unit->dst = ((int) position.y / tileSize) * EFS + ((int) position.x / tileSize);
+                            sf::Thread thread(&Unit::findPath, unit);
+                            thread.launch();
+                        }
+                    }
                 } else if (event.mouseButton.button == sf::Mouse::Middle) {
                     if (map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] == '*')
                         map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '-';
@@ -64,6 +72,45 @@ int main() {
                         map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '+';
                 }
             }
+            if (event.type == sf::Event::EventType::MouseButtonReleased) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    if(abs(position.x - rectStart.x) < 10 && abs(position.y - rectStart.y) < 10){
+                        bool isDone = false;
+                        for (Unit *unit : units) {
+                            if (unit->getGlobalBounds().contains(position.x, position.y) && !isDone) {
+                                unit->isSelected = true;
+                                isDone = true;
+                            } else {
+                                unit->isSelected = false;
+                            }
+                        }
+                    }
+                    else {
+                        for (Unit *unit : units) {
+                            if (unit->getPosition().x < position.x && unit->getPosition().x > rectStart.x &&
+                                unit->getPosition().y < position.y && unit->getPosition().y > rectStart.y ||
+                                unit->getPosition().x > position.x && unit->getPosition().x < rectStart.x &&
+                                unit->getPosition().y > position.y && unit->getPosition().y < rectStart.y ||
+                                unit->getPosition().x > position.x && unit->getPosition().x < rectStart.x &&
+                                unit->getPosition().y < position.y && unit->getPosition().y > rectStart.y ||
+                                unit->getPosition().x < position.x && unit->getPosition().x > rectStart.x &&
+                                unit->getPosition().y > position.y && unit->getPosition().y < rectStart.y) {
+
+                                unit->isSelected = true;
+                            } else {
+                                unit->isSelected = false;
+                            }
+                        }
+                    }
+                    isPressed = false;
+                }
+            }
+            else if(isPressed){
+                selectionBox.setPosition(rectStart);
+                selectionBox.setSize(position - rectStart);
+            } else{
+                selectionBox.setSize(sf::Vector2f(0.f,0.f));
+            }
         }
         screen.setView(view1);
         screen.clear(color);
@@ -72,7 +119,7 @@ int main() {
         size.x = tileSize;
         size.y = tileSize;
         rec.setSize(size);
-        /*rec.setFillColor(sf::Color(150, 150, 150));
+        rec.setFillColor(sf::Color(150, 150, 150));
         for (int i = 0; i < gameSize; i += 2 * tileSize) {
             for (int j = 0; j < gameSize; j += 2 * tileSize) {
                 pos.x = i;
@@ -86,7 +133,7 @@ int main() {
                 rec.setPosition(pos);
                 screen.draw(rec);
             }
-        }*/
+        }
         for (int i = 0; i < EFS2; i++) {
             /*if (map2[i] == '/') {
                 rec.setFillColor(sf::Color(0, 255, 150));
@@ -119,8 +166,11 @@ int main() {
             rec.setPosition(pos);
             screen.draw(rec);
         }*/
-        player.update(dt);
-        screen.draw(player);
+        for(Unit* unit: units) {
+            unit->update(dt);
+            screen.draw(*unit);
+        }
+        screen.draw(selectionBox);
         screen.display();
 
     }
