@@ -5,7 +5,7 @@
 #include "GlobalGameVariables.hpp"
 #include "Unit.hpp"
 #include "CMakeFiles/Menu.h"
-#include <math.h>
+#include <cmath>
 bool isInRect(Unit *unit, sf::Vector2f position, sf::Vector2f rectStart) {
     return
             unit->getPosition().x < position.x && unit->getPosition().x > rectStart.x &&
@@ -79,10 +79,10 @@ int main() {
     screen.setFramerateLimit(60);
     Menu menu(screen.getSize().x / 4, screen.getSize().y);
     sf::Vector2f rectStart;
-    texture.loadFromFile(R"(C://Users//Marin//CLionProjects//RTSTest//src//assets//ambulance.png)");
+    texture.loadFromFile(R"(C://Users//Marin//CLionProjects//RTSTest//src//assets//ambulance.png)");//TODO CHANGE
     float dt;
     auto *path = new FindPath(0,0);
-    Unit unit1(80, 80, texture);
+    Unit unit1(80, 80, texture);//TODO MAKE A LOOP
     Unit unit2(112, 112, texture);
     Unit unit3(144, 80, texture);
     Unit unit4(176, 112, texture);
@@ -98,9 +98,7 @@ int main() {
     units.insert(&unit6);
     units.insert(&unit7);
     units.insert(&unit8);
-    for (Unit *unit : units) {
-        unit->setOrigin(16, 16);
-    }
+
     while (screen.isOpen()) {
         mapPosition = sf::Mouse::getPosition(screen);
         position = screen.mapPixelToCoords(mapPosition);
@@ -156,6 +154,12 @@ int main() {
             }
         } else {
             while (screen.pollEvent(event)) {
+                if(event.type == sf::Event::Resized){
+                    view1.setSize( {
+                                           static_cast<float>(event.size.width),
+                                           static_cast<float>(event.size.height)
+                                   });
+                }
                 if (event.type == sf::Event::EventType::Closed) {
                     screen.close();
                 }
@@ -163,6 +167,16 @@ int main() {
                     if(event.key.code == sf::Keyboard::Escape){
                         resetMap(path);
                         inGame = false;
+                    }
+                }
+                if (event.type == sf::Event::MouseWheelMoved){
+                    switch (event.mouseWheel.delta){
+                        case 1:
+                            view1.setSize(view1.getSize().x*0.91f,view1.getSize().y*0.91f);
+                            break;
+                        case -1:
+                            view1.setSize(view1.getSize().x*1.1f,view1.getSize().y*1.1f);
+                            break;
                     }
                 }
                 if (event.type == sf::Event::EventType::MouseButtonPressed) {
@@ -234,6 +248,7 @@ int main() {
                 }
             }
         }
+
         screen.setView(view1);
         screen.clear(color);
         sf::Vector2f pos;

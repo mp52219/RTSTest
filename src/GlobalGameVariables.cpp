@@ -3,7 +3,7 @@
 //
 #include "GlobalGameVariables.hpp"
 const int tileSize = 32;
-const int gameSize = tileSize*120;
+const int gameSize = tileSize*80;
 const int screenSize = 800;
 sf::RenderWindow screen(sf::VideoMode(screenSize, screenSize), "Hello SFML");
 sf::Event event;
@@ -19,3 +19,4 @@ char map2[EFS2];
 int slow = 20;
 int isAStar = 0;
 int isVisualization = 0;
+//TODO REMOVE EXCESS
