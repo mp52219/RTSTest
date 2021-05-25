@@ -92,6 +92,7 @@ sf::Vector2f drawTerrain(sf::RectangleShape &rec) {
     }
     return pos;
 }
+
 int main() {
     for (int i = 0; i < EFS2; i++) {
         map[i] = '-';
@@ -108,15 +109,15 @@ int main() {
     sf::Texture texture;
     std::unordered_set<Unit *> units;
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
-    {
+    if (!font.loadFromFile("arial.ttf")) {
         // error...
     }
     sf::Text tips[5];
-    for(int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) {
         tips[i].setFont(font);
         tips[i].setFillColor(sf::Color(255, 255, 255, 220));
-        tips[i].setPosition(sf::Vector2f(screen.getSize().x * 0.7, screen.getSize().y/5+i*(screen.getSize().y/5)));
+        tips[i].setPosition(
+                sf::Vector2f(screen.getSize().x * 0.7, screen.getSize().y / 5 + i * (screen.getSize().y / 5)));
         tips[i].setOutlineColor(sf::Color::Red);
         tips[i].setOutlineThickness(1.2f);
     }
@@ -184,7 +185,8 @@ int main() {
                                         menu.changeToScenarioMenu();
                                     } else {
                                         isVisualization = 0;
-                                        tips[0].setString("Drag a box around vehicles to select them\nright click to command movement");
+                                        tips[0].setString(
+                                                "Drag a box around vehicles to select them\nright click to command movement");
                                         inGame = true;
                                     }
                                     break;
@@ -194,7 +196,8 @@ int main() {
                                         menu.changeToScenarioMenu();
                                     } else {
                                         isVisualization = 1;
-                                        tips[0].setString("Left click to select starting point\nright click to set destination");
+                                        tips[0].setString(
+                                                "Left click to select starting point\nright click to set destination");
                                         inGame = true;
                                     }
                                     break;
@@ -222,6 +225,8 @@ int main() {
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
                             resetMap(path);
+                            view1.setSize(30.f * tileSize, 30.f * tileSize);
+                            view1.setCenter(view1.getSize().x / 2, view1.getSize().y / 2);
                             inGame = false;
                             break;
                         case sf::Keyboard::A:
@@ -339,7 +344,7 @@ int main() {
                     screen.draw(rec);
                 }
             }
-            for (const auto & tip : tips) {
+            for (const auto &tip : tips) {
                 screen.draw(tip);
             }
         }
