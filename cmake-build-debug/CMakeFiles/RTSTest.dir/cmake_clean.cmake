@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj"
   "CMakeFiles/RTSTest.dir/src/FindPath.cpp.obj"
   "CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.obj"
+  "CMakeFiles/RTSTest.dir/src/Unit.cpp.obj"
   "CMakeFiles/RTSTest.dir/src/main.cpp.obj"
   "RTSTest.exe"
   "RTSTest.exe.manifest"

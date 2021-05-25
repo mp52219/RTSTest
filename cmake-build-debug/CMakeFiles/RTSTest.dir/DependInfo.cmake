@@ -4,8 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Users/Marin/CLionProjects/RTSTest/src/CMakeFiles/Menu.cpp" "C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj"
   "C:/Users/Marin/CLionProjects/RTSTest/src/FindPath.cpp" "C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/RTSTest.dir/src/FindPath.cpp.obj"
   "C:/Users/Marin/CLionProjects/RTSTest/src/GlobalGameVariables.cpp" "C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.obj"
+  "C:/Users/Marin/CLionProjects/RTSTest/src/Unit.cpp" "C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/RTSTest.dir/src/Unit.cpp.obj"
   "C:/Users/Marin/CLionProjects/RTSTest/src/main.cpp" "C:/Users/Marin/CLionProjects/RTSTest/cmake-build-debug/CMakeFiles/RTSTest.dir/src/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

@@ -118,11 +118,41 @@ CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.s"
 	C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Marin\CLionProjects\RTSTest\src\GlobalGameVariables.cpp -o CMakeFiles\RTSTest.dir\src\GlobalGameVariables.cpp.s
 
+CMakeFiles/RTSTest.dir/src/Unit.cpp.obj: CMakeFiles/RTSTest.dir/flags.make
+CMakeFiles/RTSTest.dir/src/Unit.cpp.obj: CMakeFiles/RTSTest.dir/includes_CXX.rsp
+CMakeFiles/RTSTest.dir/src/Unit.cpp.obj: ../src/Unit.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Marin\CLionProjects\RTSTest\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/RTSTest.dir/src/Unit.cpp.obj"
+	C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\RTSTest.dir\src\Unit.cpp.obj -c C:\Users\Marin\CLionProjects\RTSTest\src\Unit.cpp
+
+CMakeFiles/RTSTest.dir/src/Unit.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RTSTest.dir/src/Unit.cpp.i"
+	C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Marin\CLionProjects\RTSTest\src\Unit.cpp > CMakeFiles\RTSTest.dir\src\Unit.cpp.i
+
+CMakeFiles/RTSTest.dir/src/Unit.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RTSTest.dir/src/Unit.cpp.s"
+	C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Marin\CLionProjects\RTSTest\src\Unit.cpp -o CMakeFiles\RTSTest.dir\src\Unit.cpp.s
+
+CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj: CMakeFiles/RTSTest.dir/flags.make
+CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj: CMakeFiles/RTSTest.dir/includes_CXX.rsp
+CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj: ../src/CMakeFiles/Menu.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Marin\CLionProjects\RTSTest\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj"
+	C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\RTSTest.dir\src\CMakeFiles\Menu.cpp.obj -c C:\Users\Marin\CLionProjects\RTSTest\src\CMakeFiles\Menu.cpp
+
+CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.i"
+	C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Marin\CLionProjects\RTSTest\src\CMakeFiles\Menu.cpp > CMakeFiles\RTSTest.dir\src\CMakeFiles\Menu.cpp.i
+
+CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.s"
+	C:\Users\Marin\Downloads\mingw7-3\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Marin\CLionProjects\RTSTest\src\CMakeFiles\Menu.cpp -o CMakeFiles\RTSTest.dir\src\CMakeFiles\Menu.cpp.s
+
 # Object files for target RTSTest
 RTSTest_OBJECTS = \
 "CMakeFiles/RTSTest.dir/src/main.cpp.obj" \
 "CMakeFiles/RTSTest.dir/src/FindPath.cpp.obj" \
-"CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.obj"
+"CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.obj" \
+"CMakeFiles/RTSTest.dir/src/Unit.cpp.obj" \
+"CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj"
 
 # External object files for target RTSTest
 RTSTest_EXTERNAL_OBJECTS =
@@ -130,6 +160,8 @@ RTSTest_EXTERNAL_OBJECTS =
 RTSTest.exe: CMakeFiles/RTSTest.dir/src/main.cpp.obj
 RTSTest.exe: CMakeFiles/RTSTest.dir/src/FindPath.cpp.obj
 RTSTest.exe: CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.obj
+RTSTest.exe: CMakeFiles/RTSTest.dir/src/Unit.cpp.obj
+RTSTest.exe: CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj
 RTSTest.exe: CMakeFiles/RTSTest.dir/build.make
 RTSTest.exe: /SFML/lib/libsfml-system-d.a
 RTSTest.exe: /SFML/lib/libsfml-window-d.a
@@ -137,7 +169,7 @@ RTSTest.exe: /SFML/lib/libsfml-graphics-d.a
 RTSTest.exe: CMakeFiles/RTSTest.dir/linklibs.rsp
 RTSTest.exe: CMakeFiles/RTSTest.dir/objects1.rsp
 RTSTest.exe: CMakeFiles/RTSTest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Marin\CLionProjects\RTSTest\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable RTSTest.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Marin\CLionProjects\RTSTest\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable RTSTest.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\RTSTest.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

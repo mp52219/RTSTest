@@ -142,6 +142,33 @@ RTSTest/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/build
 .PHONY : RTSTest/fast
 
+src/CMakeFiles/Menu.obj: src/CMakeFiles/Menu.cpp.obj
+
+.PHONY : src/CMakeFiles/Menu.obj
+
+# target to build an object file
+src/CMakeFiles/Menu.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.obj
+.PHONY : src/CMakeFiles/Menu.cpp.obj
+
+src/CMakeFiles/Menu.i: src/CMakeFiles/Menu.cpp.i
+
+.PHONY : src/CMakeFiles/Menu.i
+
+# target to preprocess a source file
+src/CMakeFiles/Menu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.i
+.PHONY : src/CMakeFiles/Menu.cpp.i
+
+src/CMakeFiles/Menu.s: src/CMakeFiles/Menu.cpp.s
+
+.PHONY : src/CMakeFiles/Menu.s
+
+# target to generate assembly for a file
+src/CMakeFiles/Menu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/src/CMakeFiles/Menu.cpp.s
+.PHONY : src/CMakeFiles/Menu.cpp.s
+
 src/FindPath.obj: src/FindPath.cpp.obj
 
 .PHONY : src/FindPath.obj
@@ -196,6 +223,33 @@ src/GlobalGameVariables.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/src/GlobalGameVariables.cpp.s
 .PHONY : src/GlobalGameVariables.cpp.s
 
+src/Unit.obj: src/Unit.cpp.obj
+
+.PHONY : src/Unit.obj
+
+# target to build an object file
+src/Unit.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/src/Unit.cpp.obj
+.PHONY : src/Unit.cpp.obj
+
+src/Unit.i: src/Unit.cpp.i
+
+.PHONY : src/Unit.i
+
+# target to preprocess a source file
+src/Unit.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/src/Unit.cpp.i
+.PHONY : src/Unit.cpp.i
+
+src/Unit.s: src/Unit.cpp.s
+
+.PHONY : src/Unit.s
+
+# target to generate assembly for a file
+src/Unit.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RTSTest.dir\build.make CMakeFiles/RTSTest.dir/src/Unit.cpp.s
+.PHONY : src/Unit.cpp.s
+
 src/main.obj: src/main.cpp.obj
 
 .PHONY : src/main.obj
@@ -232,12 +286,18 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... RTSTest
+	@echo ... src/CMakeFiles/Menu.obj
+	@echo ... src/CMakeFiles/Menu.i
+	@echo ... src/CMakeFiles/Menu.s
 	@echo ... src/FindPath.obj
 	@echo ... src/FindPath.i
 	@echo ... src/FindPath.s
 	@echo ... src/GlobalGameVariables.obj
 	@echo ... src/GlobalGameVariables.i
 	@echo ... src/GlobalGameVariables.s
+	@echo ... src/Unit.obj
+	@echo ... src/Unit.i
+	@echo ... src/Unit.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s

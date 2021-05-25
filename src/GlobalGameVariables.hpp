@@ -10,6 +10,7 @@
 extern const int gameSize;
 extern const int tileSize;
 extern sf::RenderWindow screen;
+extern const int screenSize;
 extern sf::Event event;
 extern sf::Color color;
 extern sf::CircleShape circle;
@@ -21,4 +22,6 @@ extern const int EFS2;
 extern char map[];
 extern char map2[];
 extern int slow;
+extern int isAStar;
+extern int isVisualization;
 #endif //RTSTEST_GLOBALGAMEVARIABLES_HPP

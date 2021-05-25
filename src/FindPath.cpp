@@ -22,7 +22,26 @@ FindPath::FindPath(int srcO, int dstO) {
 
 void FindPath::findPath() {
     int prevDest = retList.back();
-    if(dst == prevDest) {
+    //if destination is not reachable
+    if (map[dst] == '*') {
+        if (map[dst + 1] != '*')
+            dst = dst + 1;
+        else if (map[dst - 1] != '*')
+            dst = dst - 1;
+        else if (map[dst - (EFS + 1)] != '*')
+            dst = dst - (EFS + 1);
+        else if (map[dst - (EFS - 1)] != '*')
+            dst = dst - (EFS - 1);
+        else if (map[dst + (EFS + 1)] != '*')
+            dst = dst + (EFS + 1);
+        else if (map[dst + (EFS - 1)] != '*')
+            dst = dst + (EFS - 1);
+        else if (map[dst - EFS] != '*')
+            dst = dst - EFS;
+        else if (map[dst + EFS] != '*')
+            dst = dst + EFS;
+    }
+    if(dst == prevDest || src == dst) {
         return;
     }
     retList.clear();
@@ -36,13 +55,13 @@ void FindPath::findPath() {
 
     for (int i = 0; i < EFS2; i++) {
         vs[i] = -1;
-        nvs[i] = MAX * MAX * MAX;
+        nvs[i] = 2147483647;
         chg[i] = -1;
     }
     nvs[src] = 0;
     vs[src] = src;
-    int j;
 
+    int j;
     for (j = 0; j < EFS2; j++) {
         for (int i = 0; i < EFS2; i++) {
             if (vs[i] != -1 && map[i] != '*') {
@@ -51,57 +70,61 @@ void FindPath::findPath() {
                 else
                     slowM = 0;
                 if (i % EFS != 0 && vs[i - 1] == -1) {
-                    if (nvs[i - 1] > nvs[i] + 10 + slowM + d(i - 1, dst)) {
-                        nvs[i - 1] = nvs[i] + 10 + slowM + d(i - 1, dst);
+                    if (nvs[i - 1] > nvs[i] + 10 + slowM + d(i - 1, dst)*isAStar) {
+                        nvs[i - 1] = nvs[i] + 10 + slowM + d(i - 1, dst)*isAStar;
                         chg[i - 1] = i;
                     }
                 }
 
                 if (i % EFS != EFS - 1 && vs[i + 1] == -1) {
-                    if (nvs[i + 1] > nvs[i] + 10 + slowM + d(i + 1, dst)) {
-                        nvs[i + 1] = nvs[i] + 10 + slowM + d(i + 1, dst);
+                    if (nvs[i + 1] > nvs[i] + 10 + slowM + d(i + 1, dst)*isAStar) {
+                        nvs[i + 1] = nvs[i] + 10 + slowM + d(i + 1, dst)*isAStar;
                         chg[i + 1] = i;
                     }
                 }
-                if (i % EFS != 0 && i >= EFS && vs[i - (EFS + 1)] == -1) {
-                    if (nvs[i - (EFS + 1)] > nvs[i] + 14 + slowM + d(i - (EFS + 1), dst)) {
-                        nvs[i - (EFS + 1)] = nvs[i] + 14 + slowM + d(i - (EFS + 1), dst);
+                //up left
+                if (i % EFS != 0 && i >= EFS && vs[i - (EFS + 1)] == -1 && map[i-1] != '*' && map[i - EFS] != '*') {
+                    if (nvs[i - (EFS + 1)] > nvs[i] + 14 + slowM + d(i - (EFS + 1), dst)*isAStar) {
+                        nvs[i - (EFS + 1)] = nvs[i] + 14 + slowM + d(i - (EFS + 1), dst)*isAStar;
                         chg[i - (EFS + 1)] = i;
                     }
                 }
-                if (i > EFS - 1 && i % EFS != EFS - 1 && vs[i - (EFS - 1)] == -1) {
-                    if (nvs[i - (EFS - 1)] > nvs[i] + 14 + slowM + d(i - (EFS - 1), dst)) {
-                        nvs[i - (EFS - 1)] = nvs[i] + 14 + slowM + d(i - (EFS - 1), dst);
+                //up right
+                if (i > EFS - 1 && i % EFS != EFS - 1 && vs[i - (EFS - 1)] == -1 && map[i+1] != '*' && map[i - EFS] != '*') {
+                    if (nvs[i - (EFS - 1)] > nvs[i] + 14 + slowM + d(i - (EFS - 1), dst)*isAStar) {
+                        nvs[i - (EFS - 1)] = nvs[i] + 14 + slowM + d(i - (EFS - 1), dst)*isAStar;
                         chg[i - (EFS - 1)] = i;
                     }
                 }
                 if (i > EFS - 1 && vs[i - EFS] == -1) {
-                    if (nvs[i - EFS] > nvs[i] + 10 + slowM + d(i - EFS, dst)) {
-                        nvs[i - EFS] = nvs[i] + 10 + slowM + d(i - EFS, dst);
+                    if (nvs[i - EFS] > nvs[i] + 10 + slowM + d(i - EFS, dst)*isAStar) {
+                        nvs[i - EFS] = nvs[i] + 10 + slowM + d(i - EFS, dst)*isAStar;
                         chg[i - EFS] = i;
                     }
                 }
                 if (i < EFS2 - EFS && vs[i + EFS] == -1) {
-                    if (nvs[i + EFS] > nvs[i] + 10 + slowM + d(i + EFS, dst)) {
-                        nvs[i + EFS] = nvs[i] + 10 + slowM + d(i + EFS, dst);
+                    if (nvs[i + EFS] > nvs[i] + 10 + slowM + d(i + EFS, dst)*isAStar) {
+                        nvs[i + EFS] = nvs[i] + 10 + slowM + d(i + EFS, dst)*isAStar;
                         chg[i + EFS] = i;
                     }
                 }
-                if (i % EFS != 0 && i < EFS2 - EFS && vs[i + (EFS - 1)] == -1) {
-                    if (nvs[i + (EFS - 1)] > nvs[i] + 14 + slowM + d(i + (EFS - 1), dst)) {
-                        nvs[i + (EFS - 1)] = nvs[i] + 14 + slowM + d(i + (EFS - 1), dst);
+                //down left
+                if (i % EFS != 0 && i < EFS2 - EFS && vs[i + (EFS - 1)] == -1 && map[i-1] != '*' && map[i + EFS] != '*') {
+                    if (nvs[i + (EFS - 1)] > nvs[i] + 14 + slowM + d(i + (EFS - 1), dst)*isAStar) {
+                        nvs[i + (EFS - 1)] = nvs[i] + 14 + slowM + d(i + (EFS - 1), dst)*isAStar;
                         chg[i + (EFS - 1)] = i;
                     }
                 }
-                if (i % EFS != EFS - 1 && i < EFS2 - (EFS + 1) && vs[i + (EFS + 1)] == -1) {
-                    if (nvs[i + (EFS + 1)] > nvs[i] + 14 + slowM + d(i + (EFS + 1), dst)) {
-                        nvs[i + (EFS + 1)] = nvs[i] + 14 + slowM + d(i + (EFS + 1), dst);
+                //down right
+                if (i % EFS != EFS - 1 && i < EFS2 - (EFS + 1) && vs[i + (EFS + 1)] == -1 && map[i+1] != '*' && map[i + EFS] != '*') {
+                    if (nvs[i + (EFS + 1)] > nvs[i] + 14 + slowM + d(i + (EFS + 1), dst)*isAStar) {
+                        nvs[i + (EFS + 1)] = nvs[i] + 14 + slowM + d(i + (EFS + 1), dst)*isAStar;
                         chg[i + (EFS + 1)] = i;
                     }
                 }
             }
         }
-        int minimum = MAX * MAX * MAX;
+        int minimum = 2147483647;
         int t = 0;
         for (int k = 0; k < EFS2; k++) {
             if (nvs[k] < minimum && vs[k] == -1) {
