@@ -164,10 +164,25 @@ int main() {
                     screen.close();
                 }
                 if (event.type == sf::Event::KeyPressed){
-                    if(event.key.code == sf::Keyboard::Escape){
-                        resetMap(path);
-                        inGame = false;
+                    switch (event.key.code) {
+                        case sf::Keyboard::Escape:
+                            resetMap(path);
+                            inGame = false;
+                            break;
+                        case sf::Keyboard::A:
+                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '*';
+                            break;
+                        case sf::Keyboard::S:
+                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '+';
+                            break;
+                        case sf::Keyboard::D:
+                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '-';
+                            break;
+                        case sf::Keyboard::Delete:
+                            resetMap(path);
+                            break;
                     }
+
                 }
                 if (event.type == sf::Event::MouseWheelMoved){
                     switch (event.mouseWheel.delta){
