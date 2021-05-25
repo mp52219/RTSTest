@@ -6,6 +6,7 @@
 #include "Unit.hpp"
 #include "CMakeFiles/Menu.h"
 #include <cmath>
+
 bool isInRect(Unit *unit, sf::Vector2f position, sf::Vector2f rectStart) {
     return
             unit->getPosition().x < position.x && unit->getPosition().x > rectStart.x &&
@@ -57,6 +58,40 @@ void resetMap(FindPath *pPath) {
 
 }
 
+sf::Vector2f drawTerrain(sf::RectangleShape &rec) {
+    sf::Vector2f pos;
+    sf::Vector2f size;
+    size.x = tileSize;
+    size.y = tileSize;
+    rec.setSize(size);
+    for (int i = 0; i < EFS2; i++) {
+        if (isVisualization) {
+            if (map2[i] == '/') {
+                rec.setFillColor(sf::Color(0, 255, 190));
+                pos.x = (i % EFS) * tileSize;
+                pos.y = (i / EFS) * tileSize;
+                rec.setPosition(pos);
+                screen.draw(rec);
+            }
+        }
+        if (map[i] == '*') {
+            rec.setFillColor(sf::Color(0, 255, 0));
+            pos.x = (i % EFS) * tileSize;
+            pos.y = (i / EFS) * tileSize;
+            rec.setPosition(pos);
+            screen.draw(rec);
+        }
+        if (map[i] == '+') {
+            rec.setFillColor(sf::Color(0, 0, 255));
+            pos.x = (i % EFS) * tileSize;
+            pos.y = (i / EFS) * tileSize;
+            rec.setPosition(pos);
+            screen.draw(rec);
+        }
+
+    }
+    return pos;
+}
 int main() {
     for (int i = 0; i < EFS2; i++) {
         map[i] = '-';
@@ -72,6 +107,24 @@ int main() {
     sf::Clock clock;
     sf::Texture texture;
     std::unordered_set<Unit *> units;
+    sf::Font font;
+    if (!font.loadFromFile("arial.ttf"))
+    {
+        // error...
+    }
+    sf::Text tips[5];
+    for(int i = 0; i < 5; i++) {
+        tips[i].setFont(font);
+        tips[i].setFillColor(sf::Color(255, 255, 255, 220));
+        tips[i].setPosition(sf::Vector2f(screen.getSize().x * 0.7, screen.getSize().y/5+i*(screen.getSize().y/5)));
+        tips[i].setOutlineColor(sf::Color::Red);
+        tips[i].setOutlineThickness(1.2f);
+    }
+    tips[0].setString("Drag a box around vehicles to select them\nright click to command movement");
+    tips[1].setString("Press and hold A to draw\nimpassable terrain");
+    tips[2].setString("Press and hold S to draw\nslowing terrain");
+    tips[3].setString("Press and hold D \nto delete terrain");
+    tips[4].setString("Press delete to delete\nall terrain");
     int scrollSpeed = 500;
     bool isPressed = false;
     bool inGame = false;
@@ -79,9 +132,9 @@ int main() {
     screen.setFramerateLimit(60);
     Menu menu(screen.getSize().x / 4, screen.getSize().y);
     sf::Vector2f rectStart;
-    texture.loadFromFile(R"(C://Users//Marin//CLionProjects//RTSTest//src//assets//ambulance.png)");//TODO CHANGE
+    texture.loadFromFile("ambulance.png");
     float dt;
-    auto *path = new FindPath(0,0);
+    auto *path = new FindPath(0, 0);
     Unit unit1(80, 80, texture);//TODO MAKE A LOOP
     Unit unit2(112, 112, texture);
     Unit unit3(144, 80, texture);
@@ -98,7 +151,7 @@ int main() {
     units.insert(&unit6);
     units.insert(&unit7);
     units.insert(&unit8);
-
+    //TODO RESET VIEW WHEN GOING BACK
     while (screen.isOpen()) {
         mapPosition = sf::Mouse::getPosition(screen);
         position = screen.mapPixelToCoords(mapPosition);
@@ -120,17 +173,18 @@ int main() {
                             menu.MoveDown();
                             break;
                         case sf::Keyboard::Escape:
-                            if(menu.GetSelectedMenu() == 1)
+                            if (menu.GetSelectedMenu() == 1)
                                 menu.changeToAlgorithmMenu();
                             break;
                         case sf::Keyboard::Return:
                             switch (menu.GetPressedItem()) {
                                 case 0:
-                                    if(menu.GetSelectedMenu() == 0) {
+                                    if (menu.GetSelectedMenu() == 0) {
                                         isAStar = 0;
                                         menu.changeToScenarioMenu();
-                                    }else {
+                                    } else {
                                         isVisualization = 0;
+                                        tips[0].setString("Drag a box around vehicles to select them\nright click to command movement");
                                         inGame = true;
                                     }
                                     break;
@@ -138,8 +192,9 @@ int main() {
                                     if (menu.GetSelectedMenu() == 0) {
                                         isAStar = 1;
                                         menu.changeToScenarioMenu();
-                                    }else {
+                                    } else {
                                         isVisualization = 1;
+                                        tips[0].setString("Left click to select starting point\nright click to set destination");
                                         inGame = true;
                                     }
                                     break;
@@ -154,16 +209,16 @@ int main() {
             }
         } else {
             while (screen.pollEvent(event)) {
-                if(event.type == sf::Event::Resized){
-                    view1.setSize( {
-                                           static_cast<float>(event.size.width),
-                                           static_cast<float>(event.size.height)
-                                   });
+                if (event.type == sf::Event::Resized) {
+                    view1.setSize({
+                                          static_cast<float>(event.size.width),
+                                          static_cast<float>(event.size.height)
+                                  });
                 }
                 if (event.type == sf::Event::EventType::Closed) {
                     screen.close();
                 }
-                if (event.type == sf::Event::KeyPressed){
+                if (event.type == sf::Event::KeyPressed) {
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
                             resetMap(path);
@@ -184,33 +239,32 @@ int main() {
                     }
 
                 }
-                if (event.type == sf::Event::MouseWheelMoved){
-                    switch (event.mouseWheel.delta){
+                if (event.type == sf::Event::MouseWheelMoved) {
+                    switch (event.mouseWheel.delta) {
                         case 1:
-                            view1.setSize(view1.getSize().x*0.91f,view1.getSize().y*0.91f);
+                            view1.setSize(view1.getSize().x * 0.91f, view1.getSize().y * 0.91f);
                             break;
                         case -1:
-                            view1.setSize(view1.getSize().x*1.1f,view1.getSize().y*1.1f);
+                            view1.setSize(view1.getSize().x * 1.1f, view1.getSize().y * 1.1f);
                             break;
                     }
                 }
                 if (event.type == sf::Event::EventType::MouseButtonPressed) {
 
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        if(isVisualization) {
+                        if (isVisualization) {
                             path->src = floor(position.y / tileSize) * EFS + floor(position.x / tileSize);
 
-                        }else {
+                        } else {
                             rectStart = position;
                             isPressed = true;
                         }
                     } else if (event.mouseButton.button == sf::Mouse::Right) {
-                        if(isVisualization){
+                        if (isVisualization) {
                             path->dst = floor(position.y / tileSize) * EFS + floor(position.x / tileSize);
                             path->findPath();
 
-                        }
-                        else {
+                        } else {
                             for (Unit *unit : units) {
                                 if (unit->isSelected) {
                                     unit->dst = ((int) position.y / tileSize) * EFS + ((int) position.x / tileSize);
@@ -266,61 +320,31 @@ int main() {
 
         screen.setView(view1);
         screen.clear(color);
-        sf::Vector2f pos;
-        sf::Vector2f size;
-        size.x = tileSize;
-        size.y = tileSize;
-        rec.setSize(size);
-        for (int i = 0; i < EFS2; i++) {
-            if (isVisualization) {
-                if (map2[i] == '/') {
-                    rec.setFillColor(sf::Color(0, 255, 190));
-                    pos.x = (i % EFS) * tileSize;
-                    pos.y = (i / EFS) * tileSize;
-                    rec.setPosition(pos);
-                    screen.draw(rec);
-                }
-            }
-            if (map[i] == '*') {
-                rec.setFillColor(sf::Color(0, 255, 0));
-                pos.x = (i % EFS) * tileSize;
-                pos.y = (i / EFS) * tileSize;
-                rec.setPosition(pos);
-                screen.draw(rec);
-            }
-            if (map[i] == '+') {
-                rec.setFillColor(sf::Color(0, 0, 255));
-                pos.x = (i % EFS) * tileSize;
-                pos.y = (i / EFS) * tileSize;
-                rec.setPosition(pos);
-                screen.draw(rec);
-            }
-
-        }
-
-
+        sf::Vector2f pos = drawTerrain(rec);
         if (inGame) {
             drawGrid(rec, pos);
-            if (isVisualization == 0) {
+            if (!isVisualization) {
                 for (Unit *unit: units) {
                     unit->update(dt);
                     screen.draw(*unit);
                 }
+                screen.draw(selectionBox);
+            }
+            if (isVisualization) {
+                for (int p : path->retList) {
+                    rec.setFillColor(sf::Color(255, 0, 0));
+                    pos.x = (p % EFS) * tileSize;
+                    pos.y = (p / EFS) * tileSize;
+                    rec.setPosition(pos);
+                    screen.draw(rec);
+                }
+            }
+            for (const auto & tip : tips) {
+                screen.draw(tip);
             }
         }
         if (!inGame) {
             menu.draw(screen);
-        }
-
-        if(!isVisualization)screen.draw(selectionBox);
-        if (isVisualization) {
-            for (int p : path->retList) {
-                rec.setFillColor(sf::Color(255, 0, 0));
-                pos.x = (p % EFS) * tileSize;
-                pos.y = (p / EFS) * tileSize;
-                rec.setPosition(pos);
-                screen.draw(rec);
-            }
         }
         screen.display();
 
