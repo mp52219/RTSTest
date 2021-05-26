@@ -16,6 +16,8 @@ public:
     void update(float dt);
     float velocity = 30.f;
     bool isSelected = false;
+
+    sf::Vector2f trueDest;
 };
 
 

@@ -5,7 +5,6 @@
 #include <iostream>
 #include "GlobalGameVariables.hpp"
 #include "FindPath.hpp"
-//TODO FIX BUG WHERE PROGRAM CRASHES IF SRC IS SET AT AN IMPASSABLE TERRAIN
 void FindPath::setSrc(int src){
     this->src = src;
 };
@@ -63,6 +62,7 @@ void FindPath::findPath() {
     vs[src] = src;
 
     int j;
+    //Dijkstra / A*
     for (j = 0; j < EFS2; j++) {
         for (int i = 0; i < EFS2; i++) {
             if (vs[i] != -1 && map[i] != '*') {

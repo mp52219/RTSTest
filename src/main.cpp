@@ -244,6 +244,7 @@ int main() {
 
                 }
                 if (event.type == sf::Event::MouseWheelMoved) {
+                    //zoom
                     switch (event.mouseWheel.delta) {
                         case 1:
                             view1.setSize(view1.getSize().x * 0.91f, view1.getSize().y * 0.91f);
@@ -254,7 +255,6 @@ int main() {
                     }
                 }
                 if (event.type == sf::Event::EventType::MouseButtonPressed) {
-
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         if (isVisualization) {
                             if(map[convertToEFS(position)] != '*')
@@ -273,6 +273,7 @@ int main() {
                             for (Unit *unit : units) {
                                 if (unit->isSelected) {
                                     unit->dst = convertToEFS(position);
+                                    unit->trueDest = position;
                                     sf::Thread thread(&Unit::findPath, unit);
                                     thread.launch();
 
@@ -292,6 +293,7 @@ int main() {
                     }
                 }
                 if (event.type == sf::Event::EventType::MouseButtonReleased) {
+                    //Draw a box and select units inside
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         if (std::abs(position.x - rectStart.x) < 10 && std::abs(position.y - rectStart.y) < 10) {
                             bool isDone = false;
