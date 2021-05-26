@@ -152,7 +152,6 @@ int main() {
     units.insert(&unit6);
     units.insert(&unit7);
     units.insert(&unit8);
-    //TODO RESET VIEW WHEN GOING BACK
     while (screen.isOpen()) {
         mapPosition = sf::Mouse::getPosition(screen);
         position = screen.mapPixelToCoords(mapPosition);

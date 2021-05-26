@@ -5,6 +5,7 @@
 #include <iostream>
 #include "GlobalGameVariables.hpp"
 #include "FindPath.hpp"
+//TODO FIX BUG WHERE PROGRAM CRASHES IF SRC IS SET AT AN IMPASSABLE TERRAIN
 void FindPath::setSrc(int src){
     this->src = src;
 };

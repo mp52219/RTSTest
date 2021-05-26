@@ -5,7 +5,7 @@
 const int tileSize = 32;
 const int gameSize = tileSize*80;
 const int screenSize = 800;
-sf::RenderWindow screen(sf::VideoMode(screenSize, screenSize), "Hello SFML");
+sf::RenderWindow screen(sf::VideoMode(screenSize, screenSize), "Dijkstra and A*");
 sf::Event event;
 sf::Color color(sf::Color::Black);
 sf::CircleShape circle(200);
