@@ -1,11 +1,11 @@
 #include <iostream>
-#include <list>
 #include <unordered_set>
 #include "FindPath.hpp"
 #include "GlobalGameVariables.hpp"
 #include "Unit.hpp"
 #include "CMakeFiles/Menu.h"
-#include <cmath>
+
+int convertToEFS(const sf::Vector2f &position) { return ((int) position.y / tileSize) * EFS + ((int) position.x / tileSize); }
 
 bool isInRect(Unit *unit, sf::Vector2f position, sf::Vector2f rectStart) {
     return
@@ -21,7 +21,7 @@ bool isInRect(Unit *unit, sf::Vector2f position, sf::Vector2f rectStart) {
 
 void drawGrid(sf::RectangleShape rec, sf::Vector2f pos) {
     rec.setSize(sf::Vector2f(gameSize, 1.5f));
-    rec.setFillColor(sf::Color(30, 200, 100));
+    rec.setFillColor(sf::Color(200, 250, 200, 150));
     pos.x = 0;
     for (int j = tileSize; j < gameSize; j += tileSize) {
         pos.y = j;
@@ -38,14 +38,14 @@ void drawGrid(sf::RectangleShape rec, sf::Vector2f pos) {
     }
 }
 
-void makeWindowScrollable(const sf::Vector2i &mapPosition, int scrollSpeed, float dt) {
+void makeWindowScrollable(const sf::Vector2i &mapPosition, float scrollSpeed, float dt) {
     if (mapPosition.x < 10 && view1.getCenter().x > view1.getSize().x / 2)
         view1.move(-1 * dt * scrollSpeed, 0);
-    if (mapPosition.x > screenSize - 10 && view1.getCenter().x < gameSize - view1.getSize().x / 2)
+    if (mapPosition.x > screenSize - 10 && view1.getCenter().x < (float)gameSize - view1.getSize().x / 2)
         view1.move(1 * dt * scrollSpeed, 0);
     if (mapPosition.y < 10 && view1.getCenter().y > view1.getSize().y / 2)
         view1.move(0, -1 * dt * scrollSpeed);
-    if (mapPosition.y > screenSize - 10 && view1.getCenter().y < gameSize - view1.getSize().y / 2)
+    if (mapPosition.y > screenSize - 10 && view1.getCenter().y < (float)gameSize - view1.getSize().y / 2)
         view1.move(0, 1 * dt * scrollSpeed);
 }
 
@@ -126,7 +126,7 @@ int main() {
     tips[2].setString("Press and hold S to draw\nslowing terrain");
     tips[3].setString("Press and hold D \nto delete terrain");
     tips[4].setString("Press delete to delete\nall terrain");
-    int scrollSpeed = 500;
+    float scrollSpeed = 500.f;
     bool isPressed = false;
     bool inGame = false;
     screen.setVerticalSyncEnabled(true);
@@ -224,18 +224,18 @@ int main() {
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
                             resetMap(path);
-                            view1.setSize(30.f * tileSize, 30.f * tileSize);
+                            view1.setSize(30.f * (float)tileSize, 30.f * (float)tileSize);
                             view1.setCenter(view1.getSize().x / 2, view1.getSize().y / 2);
                             inGame = false;
                             break;
                         case sf::Keyboard::A:
-                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '*';
+                            map[convertToEFS(position)] = '*';
                             break;
                         case sf::Keyboard::S:
-                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '+';
+                            map[convertToEFS(position)] = '+';
                             break;
                         case sf::Keyboard::D:
-                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '-';
+                            map[convertToEFS(position)] = '-';
                             break;
                         case sf::Keyboard::Delete:
                             resetMap(path);
@@ -257,7 +257,8 @@ int main() {
 
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         if (isVisualization) {
-                            path->src = floor(position.y / tileSize) * EFS + floor(position.x / tileSize);
+                            if(map[convertToEFS(position)] != '*')
+                                path->src = convertToEFS(position);
 
                         } else {
                             rectStart = position;
@@ -265,13 +266,13 @@ int main() {
                         }
                     } else if (event.mouseButton.button == sf::Mouse::Right) {
                         if (isVisualization) {
-                            path->dst = floor(position.y / tileSize) * EFS + floor(position.x / tileSize);
+                            path->dst = convertToEFS(position);
                             path->findPath();
 
                         } else {
                             for (Unit *unit : units) {
                                 if (unit->isSelected) {
-                                    unit->dst = ((int) position.y / tileSize) * EFS + ((int) position.x / tileSize);
+                                    unit->dst = convertToEFS(position);
                                     sf::Thread thread(&Unit::findPath, unit);
                                     thread.launch();
 
@@ -279,13 +280,13 @@ int main() {
                             }
                         }
                     } else if (event.mouseButton.button == sf::Mouse::Middle) {
-                        if (map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] == '*')
-                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '-';
+                        if (map[convertToEFS(position)] == '*')
+                            map[convertToEFS(position)] = '-';
                         else
-                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '*';
+                            map[convertToEFS(position)] = '*';
                     } else if (event.mouseButton.button == sf::Mouse::XButton1) {
-                        if (map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] == '+')
-                            map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '-';
+                        if (map[convertToEFS(position)] == '+')
+                            map[convertToEFS(position)] = '-';
                         else
                             map[((int) position.y / tileSize) * EFS + ((int) position.x / tileSize)] = '+';
                     }
@@ -354,3 +355,5 @@ int main() {
 
     }
 }
+
+

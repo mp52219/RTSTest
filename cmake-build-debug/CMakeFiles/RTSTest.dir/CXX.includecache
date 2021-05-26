@@ -676,41 +676,11 @@ SFML/Config.hpp
 
 C:/SFML/include/SFML/Window/WindowStyle.hpp
 
+C:/Users/Marin/CLionProjects/RTSTest/src/CMakeFiles/Menu.cpp
+Menu.h
+C:/Users/Marin/CLionProjects/RTSTest/src/CMakeFiles/Menu.h
+
 C:/Users/Marin/CLionProjects/RTSTest/src/CMakeFiles/Menu.h
 SFML/Graphics.hpp
 C:/Users/Marin/CLionProjects/RTSTest/src/CMakeFiles/SFML/Graphics.hpp
-
-C:/Users/Marin/CLionProjects/RTSTest/src/FindPath.hpp
-list
--
-SFML/Graphics.hpp
--
-
-C:/Users/Marin/CLionProjects/RTSTest/src/GlobalGameVariables.hpp
-SFML/Graphics.hpp
--
-list
--
-
-C:/Users/Marin/CLionProjects/RTSTest/src/Unit.hpp
-FindPath.hpp
-C:/Users/Marin/CLionProjects/RTSTest/src/FindPath.hpp
-
-C:/Users/Marin/CLionProjects/RTSTest/src/main.cpp
-iostream
--
-list
--
-unordered_set
--
-FindPath.hpp
-C:/Users/Marin/CLionProjects/RTSTest/src/FindPath.hpp
-GlobalGameVariables.hpp
-C:/Users/Marin/CLionProjects/RTSTest/src/GlobalGameVariables.hpp
-Unit.hpp
-C:/Users/Marin/CLionProjects/RTSTest/src/Unit.hpp
-CMakeFiles/Menu.h
-C:/Users/Marin/CLionProjects/RTSTest/src/CMakeFiles/Menu.h
-cmath
--
 

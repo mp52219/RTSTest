@@ -26,9 +26,10 @@ Menu::Menu(float width, float height)
     menu[2].setString("Exit");
     menu[2].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_OF_ITEMS + 1) * 4));
 
+    menu[3].setScale(1.5f,1.5f);
     menu[3].setFont(font);
     menu[3].setFillColor(sf::Color::White);
-    menu[3].setString("Choose a pathfinding algorithm(arrow up and arrow down)");
+    menu[3].setString("Choose a pathfinding algorithm\n(arrow up and arrow down)");
     menu[3].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_OF_ITEMS + 1) * 0.5));
 
     selectedItemIndex = 0;
@@ -62,13 +63,13 @@ void Menu::MoveDown()
     }
 }
 void Menu::changeToScenarioMenu() {
-    menu[3].setString("Choose a scenario (arrow up and arrow down)\nEscape to go back");
+    menu[3].setString("Choose a scenario\n(arrow up and arrow down)\nEscape to go back");
     menu[0].setString("Shortest path for ambulance vehicles");
     menu[1].setString("Algorithm visualization");
     selectedMenu = 1;
 }
 void Menu::changeToAlgorithmMenu() {
-    menu[3].setString("Choose a pathfinding algorithm(arrow up and arrow down)");
+    menu[3].setString("Choose a pathfinding algorithm\n(arrow up and arrow down)");
     menu[0].setString("Dijkstra");
     menu[1].setString("A*");
     selectedMenu = 0;
