@@ -1,4 +1,23 @@
 # aStar
 Basic implementation of Djikstras and A* pathfinding algorithm made in c++ using SFML.
 
+2 algorithms:
+	- Dijkstra
+	- A*
+2 scenarios:
+	- Shortest path for ambulance vehicles
+	- Visualization of the algorithms
+		- Left click to select starting point
+		  Right click to select end point
+			(there is no indication
+			 starting point has been selected)
+		- Checked vertices are teal colored
+		- Shortest path or estimated shortest path(A*)
+		  is colored in red
+	- Rest of the controls are explained in game
+Use arrow keys to navigate menu
+Window is resizable
+While in game:
+	- Use scroll wheel to zoom in and out
+	- Move mouse to edge to change view
 
