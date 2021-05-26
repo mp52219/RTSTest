@@ -3,7 +3,7 @@
 #include "FindPath.hpp"
 #include "GlobalGameVariables.hpp"
 #include "Unit.hpp"
-#include "CMakeFiles/Menu.h"
+#include "Menu.h"
 
 int convertToEFS(const sf::Vector2f &position) { return ((int) position.y / tileSize) * EFS + ((int) position.x / tileSize); }
 

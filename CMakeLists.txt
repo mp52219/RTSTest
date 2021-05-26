@@ -3,7 +3,7 @@ project(RTSTest)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(RTSTest src/main.cpp src/FindPath.cpp src/FindPath.hpp src/GlobalGameVariables.hpp src/GlobalGameVariables.cpp src/Unit.cpp src/Unit.hpp src/CMakeFiles/Menu.cpp src/CMakeFiles/Menu.h)
+add_executable(RTSTest src/main.cpp src/FindPath.cpp src/FindPath.hpp src/GlobalGameVariables.hpp src/GlobalGameVariables.cpp src/Unit.cpp src/Unit.hpp src/Menu.cpp src/Menu.h)
 
 include_directories(headers c:/SFML/include)
 
